@@ -2,13 +2,13 @@ cmake_minimum_required(VERSION 2.8.4)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 project(SOEM C)
 
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+#if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   # Default to installing in SOEM source directory
-  set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install)
-endif()
+  #set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install)
+#endif()
 
-set(SOEM_INCLUDE_INSTALL_DIR include/soem)
-set(SOEM_LIB_INSTALL_DIR lib)
+set(SOEM_INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/soem)
+set(SOEM_LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib)
 set(BUILD_TESTS TRUE)
 
 if(WIN32)
@@ -80,4 +80,15 @@ if(BUILD_TESTS)
   add_subdirectory(test/linux/slaveinfo)
   add_subdirectory(test/linux/eepromtool)
   add_subdirectory(test/linux/simple_test)
+endif()
+
+# uninstall target
+if(NOT TARGET uninstall)
+  configure_file(
+      "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+      "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+      IMMEDIATE @ONLY)
+
+  add_custom_target(uninstall
+      COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
