@@ -45,6 +45,9 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "rtems")
   set(BUILD_TESTS FALSE)
 endif()
 
+# To allow using tinyxml in another shared library
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 message("OS is ${OS}")
 
 file(GLOB SOEM_SOURCES soem/*.c)
