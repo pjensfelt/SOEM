@@ -60,7 +60,10 @@ include_directories(osal)
 include_directories(osal/${OS})
 include_directories(oshw/${OS})
 
-add_library(soem STATIC
+option(BUILD_SHARED_LIBS "build as shared library" ON)
+option(BUILD_STATIC_LIBS "build as static library" OFF)
+
+add_library(soem
   ${SOEM_SOURCES}
   ${OSAL_SOURCES}
   ${OSHW_SOURCES}
